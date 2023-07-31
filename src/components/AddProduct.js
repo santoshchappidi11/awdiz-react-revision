@@ -67,7 +67,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="image"
-            value={addProducts.value}
+            value={addProducts.image}
             onChange={handleChangeValues}
           />
         </div>
@@ -76,7 +76,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="name"
-            value={addProducts.value}
+            value={addProducts.name}
             onChange={handleChangeValues}
           />
         </div>
@@ -85,7 +85,7 @@ const AddProduct = () => {
           <input
             type="number"
             name="price"
-            value={addProducts.value}
+            value={addProducts.price}
             onChange={handleChangeValues}
           />
         </div>
@@ -93,7 +93,7 @@ const AddProduct = () => {
           <label>Category :</label>
           <select
             name="category"
-            value={addProducts.value}
+            value={addProducts.category}
             onChange={handleChangeValues}
           >
             <option>Men</option>

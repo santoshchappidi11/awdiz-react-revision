@@ -62,6 +62,7 @@ const SingleProduct = () => {
           allUsers[i].cart.push(singleProd);
           localStorage.setItem("users", JSON.stringify(allUsers));
           toast.success("Product added to cart!");
+          navigateTo("/multiple-products");
           break;
         }
       }
@@ -70,9 +71,9 @@ const SingleProduct = () => {
     }
   };
 
-  const handleEditProduct = () => {
+  const handleEditProduct = (id) => {
     if (isUserLoggedIn) {
-      navigateTo("/edit-product");
+      navigateTo(`/edit-product/${id}`);
     } else {
       toast.error("Please login to edit the product!");
     }
@@ -96,7 +97,7 @@ const SingleProduct = () => {
                 <button onClick={handleAddToCart}>Add to cart</button>
               )}
               {isEditProdButton && (
-                <button onClick={() => handleEditProduct()}>
+                <button onClick={() => handleEditProduct(singleProd.id)}>
                   Edit Product
                 </button>
               )}
