@@ -30,7 +30,7 @@ const Navbar = () => {
         {user?.name && (
           <p onClick={() => navigateTo("/multiple-products")}>All Products</p>
         )}
-        {user?.name && <p>Profile</p>}
+        {user?.name && <p onClick={() => navigateTo('/profile')}>Profile</p>}
         {user?.name && state?.userLoginDetails?.role == "Buyer" && (
           <p onClick={() => navigateTo("/cart")}>Cart</p>
         )}

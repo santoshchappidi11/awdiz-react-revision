@@ -8,6 +8,8 @@ import SingleProduct from "./components/SingleProduct";
 import Navbar from "./components/Navbar";
 import AddProduct from "./components/AddProduct";
 import CartProduct from "./components/CartProduct";
+import Profile from "./components/Profile";
+import EditProduct from "./components/EditProduct";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route exact path="/multiple-products" element={<MultipleProducts />} />
         <Route exact path="/SingleProduct/:id" element={<SingleProduct />} />
         <Route exact path="/cart" element={<CartProduct />} />
+        <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/edit-product" element={<EditProduct />} />
       </Routes>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./SingleProduct.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -60,20 +61,20 @@ const SingleProduct = () => {
         ) {
           allUsers[i].cart.push(singleProd);
           localStorage.setItem("users", JSON.stringify(allUsers));
-          alert("Product added to cart!");
+          toast.success("Product added to cart!");
           break;
         }
       }
     } else {
-      alert("Please login to add product to cart!");
+      toast.error("Please login to add product to cart!");
     }
   };
 
   const handleEditProduct = () => {
     if (isUserLoggedIn) {
-      navigateTo("/add-product");
+      navigateTo("/edit-product");
     } else {
-      alert("Please login to edit the product!");
+      toast.error("Please login to edit the product!");
     }
   };
 
@@ -88,7 +89,6 @@ const SingleProduct = () => {
             <div id="details">
               <h2>{singleProd.name}</h2>
               <h3>${singleProd.price}</h3>
-              {/* <p>{singleProd.description}</p> */}
               <h4>
                 Category: <span>{singleProd.category}</span>
               </h4>

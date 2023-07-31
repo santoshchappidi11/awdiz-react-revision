@@ -2,18 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import "./CartProduct.css";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CartProduct = () => {
   const { state } = useContext(AuthContext);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [cartProducts, setCartProducts] = useState([]);
+  const [totalCartProdPrice, setTotalCartProdPrice] = useState(0);
   const navigateTo = useNavigate();
 
   useEffect(() => {
     if (state.userLoginDetails) {
       if (state.userLoginDetails.role == "Seller") {
-        alert("You are not a valid user to access this page!");
+        toast.error("You are not a valid user to access this page!");
         navigateTo("/");
       }
     }
@@ -39,11 +41,24 @@ const CartProduct = () => {
           allUsers[i].password == currentUser.password &&
           currentUser.role == "Buyer"
         ) {
-          setCartProducts(allUsers[i].cart);
+          setCartProducts(allUsers[i]);
         }
       }
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    if (cartProducts?.cart?.length) {
+      let totalPrice = 0;
+      for (let i = 0; i < cartProducts.cart.length; i++) {
+        console.log(typeof cartProducts.cart[i].price);
+        totalPrice = totalPrice + parseInt(cartProducts.cart[i].price);
+      }
+      setTotalCartProdPrice(totalPrice);
+    } else {
+      setTotalCartProdPrice(0);
+    }
+  }, [cartProducts.cart]);
 
   const removeProduct = (index) => {
     const allUsers = JSON.parse(localStorage.getItem("users")) || [];
@@ -56,9 +71,9 @@ const CartProduct = () => {
           allUsers[i].password == currentUser.password
         ) {
           allUsers[i].cart.splice(index, 1);
-          setCartProducts(allUsers[i].cart);
+          setCartProducts(allUsers[i]);
           localStorage.setItem("users", JSON.stringify(allUsers));
-          alert("Product removed!");
+          toast.success("Product removed!");
           break;
         }
       }
@@ -80,7 +95,7 @@ const CartProduct = () => {
       }
     }
     setCartProducts([]);
-    alert("Your products will deliver soon! Thank you for shopping...");
+    toast.success("Your products will deliver soon! Thank you for shopping...");
   };
 
   return (
@@ -89,8 +104,8 @@ const CartProduct = () => {
         <div id="cart-products">
           <div id="left">
             <div id="products">
-              {cartProducts?.length ? (
-                cartProducts.map((prod, index) => (
+              {cartProducts?.cart?.length ? (
+                cartProducts.cart.map((prod, index) => (
                   <div className="product" key={index}>
                     <div className="img">
                       <img src={prod.image} alt="product" />
@@ -115,15 +130,19 @@ const CartProduct = () => {
               <div id="details">
                 <div>
                   <h4>Total Price:</h4>
-                  <h4>₹2000</h4>
+                  <h4>₹{totalCartProdPrice}</h4>
                 </div>
                 <div>
                   <h4>Discount(50%)</h4>
-                  <h4>₹1000</h4>
+                  <h4>₹{totalCartProdPrice / 2}</h4>
                 </div>
                 <div>
                   <h4>Delivery Charges:</h4>
                   <h4>₹0</h4>
+                </div>
+                <div>
+                  <h2>TOTAL</h2>
+                  <h2>₹{totalCartProdPrice / 2}</h2>
                 </div>
               </div>
               <div id="checkout">

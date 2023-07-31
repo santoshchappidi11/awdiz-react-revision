@@ -116,6 +116,16 @@
   margin: 15px 0 15px 0;
 }
 
+#cart-screen
+  > #cart-products
+  > #right
+  > #price-summary
+  > #details
+  > div
+  > h4:first-child {
+  color: rgb(58, 58, 58);
+}
+
 #cart-screen > #cart-products > #right > #price-summary > #checkout {
   width: 85%;
   height: 48px;
